@@ -10,50 +10,53 @@
           <option value="NL Conference">National League</option>
         </select>
       </div>
+      <div class="overflow-x-auto max-h-400">
+        <table v-if="selectedConference != 'Select'" class="mt-4 border-collapse border border-gray-500">
+          <!-- Table content -->
+          <colgroup>
+            <col style="width: 30%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+          </colgroup>
+          <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100 sticky top-0">
 
-      <table v-if="selectedConference != 'Select'" class="mt-4 border-collapse border border-gray-500">
+            <tr>
+              <th scope="col" class="px-6 py-3">Team</th>
+              <th scope="col" class="px-6 py-3">Wins</th>
+              <th scope="col" class="px-6 py-3">Losses</th>
+              <th scope="col" class="px-6 py-3">PCT</th>
+              <th scope="col" class="px-6 py-3">Games Behind</th>
+              <th scope="col" class="px-6 py-3">Runs Scored</th>
+              <th scope="col" class="px-6 py-3">Runs Allowed</th>
+              <th scope="col" class="px-6 py-3">Run Differential</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            
+            <!-- Render either Eastern or Western conference teams based on selection -->
+            <tr v-for="(team, index) in selectedConference === 'NL Conference' ? nlConference : alConference" :key="index" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 px-6 py-4 text-gray-400">
+              <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
+                <img class="block w-12 h-12 mb-2" :src="team.teamLogo" :alt="team.displayName + ' logo'">
+                <span class="block text-center">{{ team.displayName }}</span>
+              </td>
+              <td class="px-6 py-4 text-gray-400 text-center">{{ team.wins }}</td>
+              <td class="px-6 py-4 text-gray-400 text-center">{{ team.losses }}</td>
+              <td class="px-6 py-4 text-gray-400 text-center">{{ ((team.wins / (team.wins + team.losses)) * 100).toFixed(1) }}</td>
+              <td class="px-6 py-4 text-gray-400 text-center">{{ calculatedValue(team) }}</td> 
+              <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsScored }}</td> 
+              <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsAgainst }}</td> 
+              <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsScored - team.runsAgainst }}</td> 
+            </tr>
+          </tbody>
+        </table>
         <!-- Table content -->
-        <colgroup>
-          <col style="width: 30%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-          <col style="width: 10%;">
-        </colgroup>
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
-          <tr>
-            <th scope="col" class="px-6 py-3">Team</th>
-            <th scope="col" class="px-6 py-3">Wins</th>
-            <th scope="col" class="px-6 py-3">Losses</th>
-            <th scope="col" class="px-6 py-3">PCT</th>
-            <th scope="col" class="px-6 py-3">Games Behind</th>
-            <th scope="col" class="px-6 py-3">Runs Scored</th>
-            <th scope="col" class="px-6 py-3">Runs Allowed</th>
-            <th scope="col" class="px-6 py-3">Run Differential</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          
-          <!-- Render either Eastern or Western conference teams based on selection -->
-          <tr v-for="(team, index) in selectedConference === 'NL Conference' ? nlConference : alConference" :key="index" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 px-6 py-4 text-gray-400">
-            <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
-              <img class="block w-12 h-12 mb-2" :src="team.teamLogo" :alt="team.displayName + ' logo'">
-              <span class="block text-center">{{ team.displayName }}</span>
-            </td>
-            <td class="px-6 py-4 text-gray-400 text-center">{{ team.wins }}</td>
-            <td class="px-6 py-4 text-gray-400 text-center">{{ team.losses }}</td>
-            <td class="px-6 py-4 text-gray-400 text-center">{{ ((team.wins / (team.wins + team.losses)) * 100).toFixed(1) }}</td>
-            <td class="px-6 py-4 text-gray-400 text-center">{{ calculatedValue(team) }}</td> 
-            <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsScored }}</td> 
-            <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsAgainst }}</td> 
-            <td class="px-6 py-4 text-gray-400 text-center">{{ team.runsScored - team.runsAgainst }}</td> 
-          </tr>
-        </tbody>
-      </table>        <!-- Table content -->
+        </div>
     </div>
   </div>
 </template>
@@ -98,7 +101,7 @@
     methods: {
       async fetchConferenceStandings() {
         this.isLoading = true; // Set loading of API to true when the call starts
-        const endpoint = `https://localhost:7049/api/MLBConference`;
+        const endpoint = `http://localhost:5000/api/MLBConference`;
         console.log("i get here inside the fetch");
         try {
           console.log("i get here inside the try");

@@ -175,7 +175,7 @@ export default {
       if (!teamAbv) {
         return;
       }
-      const endpoint = `https://localhost:7049/api/NHLTeamPlayers`;
+      const endpoint = `http://localhost:5000/api/NHLTeamPlayers`;
       try {
         const response = await axios.get(endpoint, {
           headers: {

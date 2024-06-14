@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace SportingStats.Controllers.NHL_API
+namespace SportingStatsBackEnd.Controllers.NHL_API
 {
     [ApiController]
     [Route("api/[controller]")]

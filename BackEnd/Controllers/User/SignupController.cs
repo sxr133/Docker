@@ -1,10 +1,10 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
-using SportingStats.Data;
-using SportingStats.Models;
+using SportingStatsBackEnd.Data;
+using SportingStatsBackEnd.Models;
 
-namespace SportingStats.Controllers.User
+namespace SportingStatsBackEnd.Controllers.User
 {
     [ApiController]
     [Route("[controller]")]
@@ -68,7 +68,7 @@ namespace SportingStats.Controllers.User
                 _context.SaveChanges();
 
                 // Create a new user instance
-                var newUser = new SportingStats.Models.User
+                var newUser = new SportingStatsBackEnd.Models.User
                 {
                     Email = request.Email,
                     Password = request.Password,

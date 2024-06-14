@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios'; // Import Axios
 
 library.add(faEyeSlash);
@@ -136,7 +136,7 @@ export default {
 
         console.log("userData data:", userData); // Log userSignup data
         console.log("Sending signup request...");
-        const endpoint = 'https://localhost:7049/Signup'; // Adjust the URL as per your backend setup
+        const endpoint = 'http://localhost:5000/Signup'; // Adjust the URL as per your backend setup
         const response = await axios.post(endpoint, userData);
 
         console.log("Signup response:", response.data); // Log signup response

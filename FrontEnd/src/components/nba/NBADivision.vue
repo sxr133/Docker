@@ -97,7 +97,7 @@
       async fetchDivisionStandings() {
         // Set loading of API to true when the call starts
         this.isLoading = true; 
-        const endpoint = `https://localhost:7049/api/NBADivision`;
+        const endpoint = `http://localhost:5000/api/NBADivision`;
         console.log("i get here inside the fetch");
         try {
           console.log("i get here inside the try");

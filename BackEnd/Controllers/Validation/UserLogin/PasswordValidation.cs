@@ -1,4 +1,4 @@
-﻿namespace SportingStats.Controllers.Validation.UserLogin
+﻿namespace SportingStatsBackEnd.Controllers.Validation.UserLogin
 {
     public class PasswordValidation
     {

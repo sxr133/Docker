@@ -1,4 +1,4 @@
-﻿namespace SportingStats.Models
+﻿namespace SportingStatsBackEnd.Models
 {
     public class User
     {

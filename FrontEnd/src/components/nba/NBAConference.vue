@@ -98,7 +98,7 @@
     methods: {
       async fetchConferenceStandings() {
         this.isLoading = true; // Set loading of API to true when the call starts
-        const endpoint = `https://localhost:7049/api/NBAConference`;
+        const endpoint = `http://localhost:5000/api/NBAConference`;
         console.log("i get here inside the fetch");
         try {
           console.log("i get here inside the try");

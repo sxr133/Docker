@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SportingStats.Models
+namespace SportingStatsBackEnd.Models
 {
     public class UserSignup
     {

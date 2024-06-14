@@ -184,7 +184,7 @@ export default {
       if (!teamAbv) {
         return;
       }
-      const endpoint = `https://localhost:7049/api/NBATeamPlayers`;
+      const endpoint = `http://localhost:5000/api/NBATeamPlayers`;
         try {
           const response = await axios.get(endpoint, {
             headers: {

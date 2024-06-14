@@ -2,8 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using SportingStats.Data;
-
+using SportingStatsBackEnd.Data;
 public class Program
 {
     public static void Main(string[] args)
@@ -17,7 +16,7 @@ public class Program
         var app = builder.Build();
 
         ConfigureDevelopment(app, app.Environment);
-        app.Run();
+        app.Run("http://*:5000");
     }
 
     private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)

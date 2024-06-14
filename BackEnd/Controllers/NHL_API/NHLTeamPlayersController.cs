@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace SportingStats.Controllers.NHL_API
+namespace SportingStatsBackEnd.Controllers.NHL_API
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace SportingStats.Controllers.Validation.UserLogin
+namespace SportingStatsBackEnd.Controllers.Validation.UserLogin
 {
     public class EmailValidation
     {

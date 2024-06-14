@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using SportingStats.Controllers.Validation.UserLogin;
-using SportingStats.Data;
+using SportingStatsBackEnd.Controllers.Validation.UserLogin;
+using SportingStatsBackEnd.Data;
 
-namespace SportingStats.Controllers.User
+namespace SportingStatsBackEnd.Controllers.User
 {
     [ApiController]
     [Route("[controller]")]

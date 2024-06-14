@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SportingStats.Models;
+using SportingStatsBackEnd.Models;
 
-namespace SportingStats.Data
+namespace SportingStatsBackEnd.Data
 {
     public class AppDbContext : DbContext
     {

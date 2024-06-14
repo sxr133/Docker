@@ -11,193 +11,195 @@
       </div>
 
       <!-- Pitchers table -->
-      <div v-if="selectedPosition === 'Pitchers' && pitchers.length > 0" class="overflow-x-auto shadow-md sm:rounded-lg">
-        <input type="text" v-model="searchQuery" placeholder="Search..." class="text-gray-400 uppercase dark:bg-gray-800 my-5 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-opacity-100">
-         <button class="back-button" @click="goToDivisionPage">Go to Division Page</button>
- 
-
-        <!--Pitchers statistics-->
-        <table class="mt-4 border-collapse border border-gray-500 w-full md:max-w-screen-xl">
-          <colgroup>
-            <col style="width: 5%;">
-            <col style="width: 15%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-          </colgroup>
-          <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
-            <tr>
-              <th colspan="18" class="text-center py-4 text-xl font-semibold border border-gray-300 rounded-md">{{ teamName }}</th>
-            </tr> 
-            <tr>
-              <th scope="col" class="px-6 py-3" title="Position">Pos</th>
-              <th scope="col" class="px-6 py-3">
-                <span @click="sortPitchersByColumn('name')" class="cursor-pointer">
-                  Name
-                  <span v-if="sortBy === 'name' || sortBy === null" class="ml-1">
-                    <span v-if="sortDirection === 'asc'">▲</span>
-                    <span v-else-if="sortDirection === 'desc'">▼</span>
-                  </span>                
-                </span>
-              </th>
-              <th scope="col" class="px-6 py-3" title="Wins">W</th>
-              <th scope="col" class="px-6 py-3" title="Losses">L</th>
-              <th scope="col" class="px-6 py-3" title="Earned Run Average">ERA</th>
-              <th scope="col" class="px-6 py-3" title="Games">Games</th>
-              <th scope="col" class="px-6 py-3" title="Games Started">GS</th>
-              <th scope="col" class="px-6 py-3" title="Saves">SV</th>
-              <th scope="col" class="px-6 py-3" title="Saves Opportunities">SVO</th>
-              <th scope="col" class="px-6 py-3" title="Innings Pitch">IP</th>
-              <th scope="col" class="px-6 py-3" title="Hits">H</th>
-              <th scope="col" class="px-6 py-3" title="Runs">R</th>
-              <th scope="col" class="px-6 py-3" title="Earned Runs">ER</th>
-              <th scope="col" class="px-6 py-3" title="Home Runs">HR</th>
-              <th scope="col" class="px-6 py-3" title="Walks">BB</th>
-              <th scope="col" class="px-6 py-3" title="Strike Outs">SO</th>
-              <th scope="col" class="px-6 py-3" title="Walks and Hits Per Inning Pitch">WHIP</th>
-              <th scope="col" class="px-6 py-3" title="Batting Average Against">AVG</th>
-            </tr>
-          </thead>
-          <tbody >
-            <tr v-for="(player, index) in filteredPitchers" :key="index" 
-              :class="{ 'bg-white dark:bg-gray-900': index % 2 === 0, 'bg-gray-50 dark:bg-gray-800': index % 2 !== 0 }"
-              class="border-b dark:border-gray-700 px-6 py-4 text-gray-400">
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.position }}</td>
-              <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
-                <img class="block w-12 h-12 mb-2" :src="player.headshot" :alt="player.fullName + ' headshot'">
-                <span class="block text-center">{{ player.fullName }}</span>
-              </td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.wins }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.loss }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.era }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.games }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.gamesStarted }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.saves }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.savesOpportunities }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.inningsPitch }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.hits }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.runs }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.earnedRuns }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.homeRuns }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.walks }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.strikeOuts }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.whip }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.avg }}</td>
-            </tr>  
-          </tbody>
-        </table>
-      </div>
-      <div v-else-if="selectedPosition === 'Fielders' && nonPitchers.length > 0" class="overflow-x-auto shadow-md sm:rounded-lg">
-        <input type="text" v-model="searchQuery" placeholder="Search..." class="text-gray-400 uppercase dark:bg-gray-800 my-5 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-opacity-100">
-
-        <div> 
+      <div class="overflow-x-auto max-h-200">
+        <div v-if="selectedPosition === 'Pitchers' && pitchers.length > 0" class="overflow-x-auto shadow-md sm:rounded-lg">
+          <input type="text" v-model="searchQuery" placeholder="Search..." class="text-gray-400 uppercase dark:bg-gray-800 my-5 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-opacity-100">
           <button class="back-button" @click="goToDivisionPage">Go to Division Page</button>
-        </div>  
+  
 
-        <!--Fielders statistics-->
-        <table class="mt-4 border-collapse border border-gray-500 w-full md:max-w-screen-xl">
-          <colgroup>
-            <col style="width: 5%;">
-            <col style="width: 15%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-            <col style="width: 5%;">
-          </colgroup>
-          <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100">
-            <tr>
-              <th colspan="18" class="text-center py-4 text-xl font-semibold border border-gray-300 rounded-md">{{ teamName }}</th>
-            </tr> 
-            <tr>
-              <th scope="col" class="px-6 py-3" title="Position">
-                <span @click="sortFieldersByColumn('position')" class="cursor-pointer">
-                  POS
-                  <span v-if="sortBy === 'position' || sortBy === null" class="ml-1">
-                    <span v-if="sortDirection === 'asc'">▲</span>
-                    <span v-else-if="sortDirection === 'desc'">▼</span>
-                  </span> 
-                </span>   
-              </th>
-              <th scope="col" class="px-6 py-3" title="Name">
-                <span @click="sortFieldersByColumn('name')" class="cursor-pointer">
-                  NAME
-                  <span v-if="sortBy === 'name' || sortBy === null" class="ml-1">
-                    <span v-if="sortDirection === 'asc'">▲</span>
-                    <span v-else-if="sortDirection === 'desc'">▼</span>
-                  </span>                
-                </span>
-              </th>
-              <th scope="col" class="px-6 py-3" title="Games Played">G</th>
-              <th scope="col" class="px-6 py-3" title="At Bat">AB</th>
-              <th scope="col" class="px-6 py-3" title="Run">R</th>
-              <th scope="col" class="px-6 py-3" title="Hits">H</th>
-              <th scope="col" class="px-6 py-3" title="Doubles">2B</th>
-              <th scope="col" class="px-6 py-3" title="Triples">3B</th>
-              <th scope="col" class="px-6 py-3" title="Home Runs">HR</th>
-              <th scope="col" class="px-6 py-3" title="Runs Batted In">RBI</th>
-              <th scope="col" class="px-6 py-3" title="Walks">BB</th>
-              <th scope="col" class="px-6 py-3" title="Strike Outs">SO</th>
-              <th scope="col" class="px-6 py-3" title="Stolen Bases">SB</th>
-              <th scope="col" class="px-6 py-3" title="Caught Stealing">CS</th>
-              <th scope="col" class="px-6 py-3" title="Batting Average">AVG</th>
-              <th scope="col" class="px-6 py-3" title="On Base Percentage">OBP</th>
-              <th scope="col" class="px-6 py-3" title="Slugging Percentage">SLG</th>
-              <th scope="col" class="px-6 py-3" title="On-Base plus Slugging Percentage">OPS</th>
-            </tr>
-          </thead>
-          <tbody >
-            <tr v-for="(player, index) in filteredFielders" :key="index" 
-              :class="{ 'bg-white dark:bg-gray-900': index % 2 === 0, 'bg-gray-50 dark:bg-gray-800': index % 2 !== 0 }"
-              class="border-b dark:border-gray-700 px-6 py-4 text-gray-400">
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.position }}</td>
-              <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
-                <img class="block w-12 h-12 mb-2" :src="player.headshot" :alt="player.fullName + ' headshot'">
-                <span class="block text-center">{{ player.fullName }}</span>
-              </td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.games }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.atBat }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.run }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.hit }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.double }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.triple }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.homeRun }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.rbi }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.walks }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.strikeOuts }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.stolenBase }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.caughtStealing }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.avg }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.obp }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.slg }}</td>
-              <td class="px-6 py-4 text-gray-400 text-center">{{ player.ops }}</td>
-            </tr>  
-          </tbody>
-        </table>
+          <!--Pitchers statistics-->
+          <table class="mt-4 border-collapse border border-gray-500 w-full md:max-w-screen-xl">
+            <colgroup>
+              <col style="width: 5%;">
+              <col style="width: 15%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+            </colgroup>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100 sticky top-0">
+              <tr>
+                <th colspan="18" class="text-center py-4 text-xl font-semibold border border-gray-300 rounded-md">{{ teamName }}</th>
+              </tr> 
+              <tr>
+                <th scope="col" class="px-6 py-3" title="Position">Pos</th>
+                <th scope="col" class="px-6 py-3">
+                  <span @click="sortPitchersByColumn('name')" class="cursor-pointer">
+                    Name
+                    <span v-if="sortBy === 'name' || sortBy === null" class="ml-1">
+                      <span v-if="sortDirection === 'asc'">▲</span>
+                      <span v-else-if="sortDirection === 'desc'">▼</span>
+                    </span>                
+                  </span>
+                </th>
+                <th scope="col" class="px-6 py-3" title="Wins">W</th>
+                <th scope="col" class="px-6 py-3" title="Losses">L</th>
+                <th scope="col" class="px-6 py-3" title="Earned Run Average">ERA</th>
+                <th scope="col" class="px-6 py-3" title="Games">Games</th>
+                <th scope="col" class="px-6 py-3" title="Games Started">GS</th>
+                <th scope="col" class="px-6 py-3" title="Saves">SV</th>
+                <th scope="col" class="px-6 py-3" title="Saves Opportunities">SVO</th>
+                <th scope="col" class="px-6 py-3" title="Innings Pitch">IP</th>
+                <th scope="col" class="px-6 py-3" title="Hits">H</th>
+                <th scope="col" class="px-6 py-3" title="Runs">R</th>
+                <th scope="col" class="px-6 py-3" title="Earned Runs">ER</th>
+                <th scope="col" class="px-6 py-3" title="Home Runs">HR</th>
+                <th scope="col" class="px-6 py-3" title="Walks">BB</th>
+                <th scope="col" class="px-6 py-3" title="Strike Outs">SO</th>
+                <th scope="col" class="px-6 py-3" title="Walks and Hits Per Inning Pitch">WHIP</th>
+                <th scope="col" class="px-6 py-3" title="Batting Average Against">AVG</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr v-for="(player, index) in filteredPitchers" :key="index" 
+                :class="{ 'bg-white dark:bg-gray-900': index % 2 === 0, 'bg-gray-50 dark:bg-gray-800': index % 2 !== 0 }"
+                class="border-b dark:border-gray-700 px-6 py-4 text-gray-400">
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.position }}</td>
+                <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
+                  <img class="block w-12 h-12 mb-2" :src="player.headshot" :alt="player.fullName + ' headshot'">
+                  <span class="block text-center">{{ player.fullName }}</span>
+                </td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.wins }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.loss }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.era }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.games }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.gamesStarted }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.saves }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.savesOpportunities }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.inningsPitch }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.hits }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.runs }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.earnedRuns }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.homeRuns }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.walks }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.strikeOuts }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.whip }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.avg }}</td>
+              </tr>  
+            </tbody>
+          </table>
+        </div>
+        <div v-else-if="selectedPosition === 'Fielders' && nonPitchers.length > 0" class="overflow-x-auto shadow-md sm:rounded-lg">
+          <input type="text" v-model="searchQuery" placeholder="Search..." class="text-gray-400 uppercase dark:bg-gray-800 my-5 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-opacity-100">
+
+          <div> 
+            <button class="back-button" @click="goToDivisionPage">Go to Division Page</button>
+          </div>  
+
+          <!--Fielders statistics-->
+          <table class="mt-4 border-collapse border border-gray-500 w-full md:max-w-screen-xl">
+            <colgroup>
+              <col style="width: 5%;">
+              <col style="width: 15%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+              <col style="width: 5%;">
+            </colgroup>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-100 sticky top-0">
+              <tr>
+                <th colspan="18" class="text-center py-4 text-xl font-semibold border border-gray-300 rounded-md">{{ teamName }}</th>
+              </tr> 
+              <tr>
+                <th scope="col" class="px-6 py-3" title="Position">
+                  <span @click="sortFieldersByColumn('position')" class="cursor-pointer">
+                    POS
+                    <span v-if="sortBy === 'position' || sortBy === null" class="ml-1">
+                      <span v-if="sortDirection === 'asc'">▲</span>
+                      <span v-else-if="sortDirection === 'desc'">▼</span>
+                    </span> 
+                  </span>   
+                </th>
+                <th scope="col" class="px-6 py-3" title="Name">
+                  <span @click="sortFieldersByColumn('name')" class="cursor-pointer">
+                    NAME
+                    <span v-if="sortBy === 'name' || sortBy === null" class="ml-1">
+                      <span v-if="sortDirection === 'asc'">▲</span>
+                      <span v-else-if="sortDirection === 'desc'">▼</span>
+                    </span>                
+                  </span>
+                </th>
+                <th scope="col" class="px-6 py-3" title="Games Played">G</th>
+                <th scope="col" class="px-6 py-3" title="At Bat">AB</th>
+                <th scope="col" class="px-6 py-3" title="Run">R</th>
+                <th scope="col" class="px-6 py-3" title="Hits">H</th>
+                <th scope="col" class="px-6 py-3" title="Doubles">2B</th>
+                <th scope="col" class="px-6 py-3" title="Triples">3B</th>
+                <th scope="col" class="px-6 py-3" title="Home Runs">HR</th>
+                <th scope="col" class="px-6 py-3" title="Runs Batted In">RBI</th>
+                <th scope="col" class="px-6 py-3" title="Walks">BB</th>
+                <th scope="col" class="px-6 py-3" title="Strike Outs">SO</th>
+                <th scope="col" class="px-6 py-3" title="Stolen Bases">SB</th>
+                <th scope="col" class="px-6 py-3" title="Caught Stealing">CS</th>
+                <th scope="col" class="px-6 py-3" title="Batting Average">AVG</th>
+                <th scope="col" class="px-6 py-3" title="On Base Percentage">OBP</th>
+                <th scope="col" class="px-6 py-3" title="Slugging Percentage">SLG</th>
+                <th scope="col" class="px-6 py-3" title="On-Base plus Slugging Percentage">OPS</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr v-for="(player, index) in filteredFielders" :key="index" 
+                :class="{ 'bg-white dark:bg-gray-900': index % 2 === 0, 'bg-gray-50 dark:bg-gray-800': index % 2 !== 0 }"
+                class="border-b dark:border-gray-700 px-6 py-4 text-gray-400">
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.position }}</td>
+                <td class="flex flex-col items-center justify-center px-6 py-4 text-gray-400">
+                  <img class="block w-12 h-12 mb-2" :src="player.headshot" :alt="player.fullName + ' headshot'">
+                  <span class="block text-center">{{ player.fullName }}</span>
+                </td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.games }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.atBat }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.run }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.hit }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.double }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.triple }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.homeRun }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.rbi }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.walks }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.strikeOuts }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.stolenBase }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.caughtStealing }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.avg }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.obp }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.slg }}</td>
+                <td class="px-6 py-4 text-gray-400 text-center">{{ player.ops }}</td>
+              </tr>  
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -299,7 +301,7 @@ export default {
       if (!teamAbv) {
         return;
       }
-      const endpoint = `https://localhost:7049/api/MLBTeamPlayers`;
+      const endpoint = `http://localhost:5000/api/MLBTeamPlayers`;
       try {
         const response = await axios.get(endpoint, {
           headers: {

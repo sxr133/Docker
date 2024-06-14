@@ -94,7 +94,7 @@
         // Set loading of API to true when the call starts
         this.isLoading = true;
 
-        const endpoint = `https://localhost:7049/api/MLBDivision`;
+        const endpoint = `http://localhost:5000/api/MLBDivision`;
 
         try {
           const response = await axios.get(endpoint);

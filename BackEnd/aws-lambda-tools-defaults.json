@@ -1,8 +1,0 @@
-
-{
-    "region" : "ca-central-1",
-    "profile" : "sportstatsuser",
-    "s3-bucket" : "sportingstats",
-    "template"  : "serverless.template",
-    "stack-name" : "CDKToolkit"
-}

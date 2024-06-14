@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SportingStats.Data;
+using SportingStatsBackEnd.Data;
 
-namespace SportingStats.Controllers.User
+namespace SportingStatsBackEnd.Controllers.User
 {
     [ApiController]
     [Route("[controller]")]

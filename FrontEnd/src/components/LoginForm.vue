@@ -28,12 +28,12 @@
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios'; // Import Axios
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faEyeSlash);
 library.add(faEye);
@@ -69,7 +69,7 @@ export default {
           return;
         }
 
-        const endpoint = `https://localhost:7049/Login`;
+        const endpoint = `http://localhost:5000/Login`;
         const response = await axios.post(endpoint, { 
           email: email.value,
           password: password.value
