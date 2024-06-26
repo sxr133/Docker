@@ -1,0 +1,14 @@
+[
+  {
+    "name": "vue-app",
+    "script": "node",
+    "args": ["start-serve.js"],
+    "watch": false
+  },
+  {
+    "name": "healthcheck",
+    "script": "node",
+    "args": ["healthcheck.js"],
+    "watch": false
+  }
+]

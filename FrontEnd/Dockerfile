@@ -20,11 +20,20 @@ ENV VUE_APP_BACKEND_URL=http://localhost:5000
 # Build the Vue.js project
 RUN npm run build
 
-# Install a simple HTTP server to serve the built application
-RUN npm install -g serve
+# Install global dependencies
+RUN npm install -g serve pm2
 
-# Expose the port on which the Vue.js app runs
-EXPOSE 8080
+# Copy healthcheck script
+COPY healthcheck.js .
 
-# Command to run the Vue.js app
-CMD ["serve", "-s", "dist"]
+# Copy PM2 configuration file
+COPY pm2.json .
+
+# Copy the start-serve script
+COPY start-serve.js .
+
+# Expose the ports on which the Vue.js app and health check server run
+EXPOSE 8080 3001
+
+# Command to run the Vue.js app and health check server using pm2
+CMD ["pm2-runtime", "start", "pm2.json"]
