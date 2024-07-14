@@ -6,3 +6,5 @@
 /BackEnd/bin
 /BackEnd/obj
 /FrontEnd/node_modules
+FrontEnd/.env.development
+FrontEnd/.env.production

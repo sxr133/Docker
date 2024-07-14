@@ -17,11 +17,18 @@ RUN dotnet build -c Release -o out SportingStatsBackEnd.csproj
 # Specify the runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
+# Set the environment variable to Development or Production based on your needs
+ARG ASPNETCORE_ENVIRONMENT
+ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+
 # Set the working directory for the runtime image
 WORKDIR /app
 
 # Copy the built application from the build image
 COPY --from=build /app/out ./
+
+#Expose the required ports
+EXPOSE 5000 5001
 
 # Specify the entry point
 ENTRYPOINT ["dotnet", "SportingStatsBackEnd.dll"]

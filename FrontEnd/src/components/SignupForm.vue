@@ -136,7 +136,8 @@ export default {
 
         console.log("userData data:", userData); // Log userSignup data
         console.log("Sending signup request...");
-        const endpoint = 'http://localhost:5000/Signup'; // Adjust the URL as per your backend setup
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const endpoint = `${baseURL}/Signup`; // Adjust the URL as per your backend setup
         const response = await axios.post(endpoint, userData);
 
         console.log("Signup response:", response.data); // Log signup response

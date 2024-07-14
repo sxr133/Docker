@@ -13,12 +13,23 @@ RUN npm install
 # Copy the rest of the application code to /app
 COPY . .
 
-# Set environment variable for backend URL
-# This will be used during the build process
-ENV VUE_APP_BACKEND_URL=http://localhost:5000
+# Copy .env.production to /app
+COPY .env.production .env
+
+# Set environment variable for backend URL during the build process
+ARG VUE_APP_BACKEND_URL
+ENV VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL
+
+# Debug: Print environment variables before build
+RUN echo "Environment variables before build:"
+RUN printenv
 
 # Build the Vue.js project
 RUN npm run build
+
+# Debug: Print environment variables after build
+RUN echo "Environment variables after build:"
+RUN printenv
 
 # Install global dependencies
 RUN npm install -g serve pm2

@@ -69,7 +69,8 @@ export default {
           return;
         }
 
-        const endpoint = `http://localhost:5000/Login`;
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const endpoint = `${baseURL}/Login`;
         const response = await axios.post(endpoint, { 
           email: email.value,
           password: password.value

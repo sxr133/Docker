@@ -93,8 +93,8 @@
       async fetchDivisionStandings() {
         // Set loading of API to true when the call starts
         this.isLoading = true;
-
-        const endpoint = `http://localhost:5000/api/MLBDivision`;
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const endpoint = `${baseURL}/api/MLBDivision`;
 
         try {
           const response = await axios.get(endpoint);

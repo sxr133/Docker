@@ -11,10 +11,12 @@ namespace SportingStatsBackEnd.Controllers.User
     public class SignupController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<SignupController> _logger;
 
-        public SignupController(AppDbContext context)
+        public SignupController(AppDbContext context, ILogger<SignupController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -38,7 +40,7 @@ namespace SportingStatsBackEnd.Controllers.User
                 // Generate a verification token
                 var token = GenerateVerificationToken();
 
-                Console.WriteLine("New user signing up is set to: {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}", request.FirstName, request.LastName,
+                _logger.LogInformation("New user signing up is set to: {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}", request.FirstName, request.LastName,
                     request.StreetAddress1, request.StreetAddress2, request.City, request.State_Prov, request.Zip_Post_Cd, request.Country,
                     request.Email, request.Password, request.VerificationToken, request.IsEmailVerified);
 
@@ -85,20 +87,20 @@ namespace SportingStatsBackEnd.Controllers.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error during user signup");
                 return StatusCode(500, new { Message = "An unexpected error occurred" });
             }
         }
         private string GenerateVerificationToken()
         {
-            Console.WriteLine("token created");
+            _logger.LogInformation("Token created");
             // Generate a unique verification token (you can use GUID or any other method)
             return Guid.NewGuid().ToString();
         }
 
         private void SendVerificationEmail(string firstName, string lastName, string email, string token)
         {
-            Console.WriteLine("Getting ready to send email out to {0} with token {1} to {2} {3}", email, token, firstName, lastName);
+            _logger.LogInformation("Getting ready to send email out to {Email} with token {Token} to {FirstName} {LastName}", email, token, firstName, lastName);
             String fullName = firstName + " " + lastName;
             try
             {
@@ -114,7 +116,7 @@ namespace SportingStatsBackEnd.Controllers.User
                     message.To.Add(new MailboxAddress(fullName, email));
                     message.Subject = "Verify Your Email Address";
                     var builder = new BodyBuilder();
-                    builder.HtmlBody = $"Please click the following link to verify your email address: <a href='https://localhost:7102/EmailVerification/verify?token={token}'>Verify Email</a>";
+                    builder.HtmlBody = $"Please click the following link to verify your email address: <a href='https://localhost:5001/EmailVerification/verify?token={token}'>Verify Email</a>";
                     message.Body = builder.ToMessageBody();
 
                     // Send the email
@@ -122,11 +124,11 @@ namespace SportingStatsBackEnd.Controllers.User
                     client.Disconnect(true);
                 }
 
-                Console.WriteLine("Email sent successfully!");
+                _logger.LogInformation("Email sent successfully!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error sending email: {ex.Message}");
+                _logger.LogError(ex, "Error sending email");
             }
         }
     }

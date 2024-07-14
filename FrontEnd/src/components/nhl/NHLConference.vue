@@ -102,7 +102,8 @@
     methods: {
       async fetchConferenceStandings() {
         this.isLoading = true; // Set loading of API to true when the call starts
-        const endpoint = `http://localhost:5000/api/NHLConference`;
+        const baseURL = process.env.VUE_APP_BACKEND_URL;
+        const endpoint = `${baseURL}/api/NHLConference`;
         console.log("i get here inside the fetch");
         try {
           console.log("i get here inside the try");

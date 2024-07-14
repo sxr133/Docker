@@ -301,7 +301,8 @@ export default {
       if (!teamAbv) {
         return;
       }
-      const endpoint = `http://localhost:5000/api/MLBTeamPlayers`;
+      const baseURL = process.env.VUE_APP_BACKEND_URL;
+      const endpoint = `${baseURL}/api/MLBTeamPlayers`;
       try {
         const response = await axios.get(endpoint, {
           headers: {

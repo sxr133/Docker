@@ -3,23 +3,37 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SportingStatsBackEnd.Data;
+using Microsoft.OpenApi.Models;
+
 public class Program
 {
     public static void Main(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-
         var builder = WebApplication.CreateBuilder(args);
-        ConfigureServices(builder.Services, configuration);
+
+        // Configure logging
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+
+        // Add configuration files based on environment
+        builder.Configuration
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables();
+
+        Console.WriteLine($"Environment is set to: {builder.Environment.EnvironmentName}");
+
+        ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         var app = builder.Build();
 
-        ConfigureDevelopment(app, app.Environment);
-        app.Run("http://*:5000");
+        ConfigureApp(app, app.Environment);
+        // Change the port based on the environment
+        string url = app.Environment.IsDevelopment() ? "http://*:5000" : "http://*:5001";
+        Console.WriteLine($"Url is set to: {url}");
+        app.Run(url);
     }
 
-    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         services.AddControllers();
         services.AddDbContext<AppDbContext>(options =>
@@ -28,7 +42,10 @@ public class Program
         });
         services.AddHttpClient();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+        });
         services.AddAuthorization(options =>
         {
             options.AddPolicy("RequireAdminRole", policy =>
@@ -36,21 +53,48 @@ public class Program
                 policy.RequireRole("Admin");
             });
         });
+
+        ConfigureCors(services, configuration);
     }
 
-    private static void ConfigureDevelopment(IApplicationBuilder app, IWebHostEnvironment env)
+    private static void ConfigureCors(IServiceCollection services, IConfiguration configuration)
     {
+        var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder =>
+                {
+                    builder.WithOrigins(allowedOrigins)
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+        });
+    }
+
+    private static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        Console.WriteLine($"Running in {env.EnvironmentName} mode");
         if (env.IsDevelopment())
         {
+            Console.WriteLine("Development mode: Enabling Swagger and Developer Exception Page");
+            app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = "swagger"; // Set Swagger UI at the root
+            });
         }
-        app.UseCors(options =>
+        else
         {
-            options.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+            Console.WriteLine("Production mode: Enabling Exception Handler and HSTS");
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseCors("AllowSpecificOrigin");
+
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthentication();
