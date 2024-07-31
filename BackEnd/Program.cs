@@ -28,7 +28,8 @@ public class Program
 
         ConfigureApp(app, app.Environment);
         // Change the port based on the environment
-        string url = app.Environment.IsDevelopment() ? "http://*:5000" : "http://*:5001";
+        string url = app.Environment.IsDevelopment() ? "https://*:5000" : "https://*:5001";
+        //string url = "https://*:5000";
         Console.WriteLine($"Url is set to: {url}");
         app.Run(url);
     }

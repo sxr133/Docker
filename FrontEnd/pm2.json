@@ -1,14 +1,24 @@
-[
-  {
-    "name": "vue-app",
-    "script": "node",
-    "args": ["start-serve.js"],
-    "watch": false
-  },
-  {
-    "name": "healthcheck",
-    "script": "node",
-    "args": ["healthcheck.js"],
-    "watch": false
-  }
-]
+{
+  "apps": [
+    {
+      "name": "vue-app",
+      "script": "/app/start-serve.js",
+      "env": {
+        "NODE_ENV": "production",
+        "HTTPS": "true",
+        "SSL_CRT_FILE": "/https/ssl/certs/selfsigned.crt",
+        "SSL_KEY_FILE": "/https/ssl/private/selfsigned.key"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "name": "healthcheck",
+      "script": "/app/healthcheck.js",
+      "env": {
+        "PORT": "3001"
+      }
+    }
+  ]
+}

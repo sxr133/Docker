@@ -105,6 +105,8 @@
         const baseURL = process.env.VUE_APP_BACKEND_URL;
         const endpoint = `${baseURL}/api/NHLConference`;
         console.log("i get here inside the fetch");
+        console.log('baseURL is ', baseURL);
+        console.log('the endpoint is ', endpoint);
         try {
           console.log("i get here inside the try");
           const response = await axios.get(endpoint);
