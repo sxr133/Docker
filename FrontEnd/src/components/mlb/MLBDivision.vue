@@ -3,7 +3,12 @@
     <div v-if="showDivisionOptionTable" class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <!-- Dropdown for selecting conference -->
       <div class="flex justify-center my-4">
-        <select v-model="selectedDivision" @change="fetchDivisionStandings" class="block w-1/2 p-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring">
+        <select 
+          id="mlbDivisionSelect" 
+          name="mlbDivision"  
+          v-model="selectedDivision" 
+          @change="fetchDivisionStandings" 
+          class="block w-1/2 p-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring">
           <option value="Select" disabled selected>Select a Division</option>
           <option value="American League East">American League East</option>
           <option value="American League Central">American League Central</option>

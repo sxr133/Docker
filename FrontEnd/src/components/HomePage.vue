@@ -11,7 +11,12 @@
         </div>
 
         <div v-if="(showDropDown && !showNHLTeamPlayers) || (showDropDown && !showNBATeamPlayers) || (showDropDown && !showMLBTeamPlayers)" class="flex justify-center my-4">
-          <select v-model="selectedStats" @change="showStats(selectedStats)" class="block w-1/2 p-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring">
+          <select 
+            id="statsDropdown" 
+            name="stats" 
+            v-model="selectedStats" 
+            @change="showStats(selectedStats)" 
+            class="block w-1/2 p-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring">
             <option value="Select" disabled selected>Select an option</option>
             <option value="Conferences">Conferences</option>
             <option value="Divisions">Divisions</option>

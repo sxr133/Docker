@@ -27,9 +27,9 @@ WORKDIR /app
 # Copy the built application from the build image
 COPY --from=build /app/out ./
 
-# Copy SSL certificates into the container
-COPY certs/selfsigned.crt /https/ssl/certs/selfsigned.crt
-COPY certs/selfsigned.key /https/ssl/private/selfsigned.key
+# Copy SSL certificates from the EC2 instance
+COPY /certs/fullchain.pem /https/ssl/certs/cert.pem
+COPY /certs/privkey.pem /https/ssl/private/key.pem
 
 COPY BackEnd/appsettings.json ./
 COPY BackEnd/appsettings.Development.json ./
@@ -39,9 +39,9 @@ COPY BackEnd/appsettings.Production.json ./
 EXPOSE 5000 5001
 
 # Set environment variables for Kestrel to use SSL
-ENV ASPNETCORE_URLS=https://+:5000;http://+:5001
-ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ssl/certs/selfsigned.crt
-ENV ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/ssl/private/selfsigned.key
+ENV ASPNETCORE_URLS=https://+:5001
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/ssl/certs/cert.pem
+ENV ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/ssl/private/key.pem
 
 # Specify the entry point
 ENTRYPOINT ["dotnet", "SportingStatsBackEnd.dll"]

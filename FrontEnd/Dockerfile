@@ -57,16 +57,14 @@ COPY FrontEnd/healthcheck.js /app/healthcheck.js
 # Copy the start-serve script
 COPY FrontEnd/start-serve.js /app/start-serve.js
 
+# Copy images
+COPY FrontEnd/public/images /usr/share/nginx/html/public/images
+
 # Copy environment variables file
 COPY FrontEnd/.env.production .env
 
 # Expose ports
 EXPOSE 8080 3001
-
-# Set environment variables for HTTPS
-ENV HTTPS=true
-ENV SSL_CRT_FILE=/https/ssl/certs/selfsigned.crt
-ENV SSL_KEY_FILE=/https/ssl/private/selfsigned.key
 
 # Start the Vue.js app and health check server using PM2
 CMD ["pm2-runtime", "start", "/app/pm2.json"]
