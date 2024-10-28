@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "vue-app",
+      "script": "/app/start-serve.js",
+      "env": {
+        "NODE_ENV": "development",
+        "HTTPS": "false",
+      }
+    },
+    {
+      "name": "healthcheck",
+      "script": "/app/healthcheck.js",
+      "env": {
+        "PORT": "3001"
+      }
+    }
+  ]
+}

@@ -68,7 +68,7 @@ public class Program
             options.AddPolicy("AllowSpecificOrigin",
                 builder =>
                 {
-                    builder.WithOrigins(allowedOrigins)
+                    builder.WithOrigins("http://localhost:8080")  //for Production -> .WithOrigins(allowedOrigins)
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 });

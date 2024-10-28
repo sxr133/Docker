@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    image: backend:latestlocal
+    build:
+      context: .
+      dockerfile: BackEnd/Dockerfile.local
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    networks:
+      - sportingstats-network
+
+  frontend:
+    image: frontend:latestlocal
+    build:
+      context: .
+      dockerfile: FrontEnd/Dockerfile.local
+      args:
+        - VUE_APP_BACKEND_URL=http://localhost:5000
+    environment:
+      - NODE_ENV=development
+      - VUE_APP_BACKEND_URL=http://localhost:5000
+    ports:
+      - "8080:8080"
+      - "3001:3001"
+    networks:
+      - sportingstats-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.dev.conf:ro
+    networks:
+      - sportingstats-network
+
+networks:
+  sportingstats-network:
+    driver: bridge
