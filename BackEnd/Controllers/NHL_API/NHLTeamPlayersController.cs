@@ -28,7 +28,7 @@ namespace SportingStatsBackEnd.Controllers.NHL_API
             {
                 Console.WriteLine("--------------------------------------------------");
                 Console.WriteLine("Team Abv {0}", teamAbv);
-                string apiKey = _configuration["AppSettings:ApiKey"];
+                string apiKey = Environment.GetEnvironmentVariable("API_KEY");
                 var client = _clientFactory.CreateClient();
                 var uri =
                     new Uri($"https://tank01-nhl-live-in-game-real-time-statistics-nhl.p.rapidapi.com/getNHLTeamRoster?teamAbv={teamAbv}&getStats=totals");

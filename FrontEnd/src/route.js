@@ -3,7 +3,7 @@ import NHLTeamPlayers from './components/nhl/NHLTeamPlayers.vue';
 import MLBTeamPlayers from './components/mlb/MLBTeamPlayers.vue';
 import NBATeamPlayers from './components/nba/NBATeamPlayers.vue';
 import SignupForm from './components/SignupForm.vue';
-import LoginForm from './components/LoginForm.vue';
+import SocialLoginForm from './components/SocialLoginForm.vue';
 import HomePage from './components/HomePage.vue';
 
 
@@ -11,8 +11,8 @@ import HomePage from './components/HomePage.vue';
 const routes = [
   {
     path: '/',
-    name: 'LoginForm',
-    component: LoginForm,
+    name: 'SocialLoginForm',
+    component: SocialLoginForm,
     props: true
   },
   {

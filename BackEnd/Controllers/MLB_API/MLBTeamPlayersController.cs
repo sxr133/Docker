@@ -28,7 +28,7 @@ namespace SportingStatsBackEnd.Controllers.MLB_API
             {
                 Console.WriteLine("--------------------------------------------------");
                 Console.WriteLine("Team Abv {0}", teamAbv);
-                string apiKey = _configuration["AppSettings:ApiKey"];
+                string apiKey = Environment.GetEnvironmentVariable("API_KEY");
                 var client = _clientFactory.CreateClient();
                 var uri = new Uri($"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv={teamAbv}&getStats=true");
                 Console.WriteLine("Uri {0}", uri);

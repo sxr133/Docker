@@ -22,7 +22,7 @@ namespace SportingStatsBackEnd.Controllers.NBA_API
             try
             {
                 Console.WriteLine("inside the NBAConference API");
-                string apiKey = _configuration["AppSettings:ApiKey"];
+                string apiKey = Environment.GetEnvironmentVariable("API_KEY");
                 var client = _clientFactory.CreateClient();
                 var uri = new Uri("https://tank01-fantasy-stats.p.rapidapi.com/getNBATeams?teamStats=true");
                 Console.WriteLine("Uri {0}", uri);

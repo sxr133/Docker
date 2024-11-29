@@ -28,8 +28,8 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Copy SSL certificates from the EC2 instance
-COPY /certs/fullchain.pem /https/ssl/certs/cert.pem
-COPY /certs/privkey.pem /https/ssl/private/key.pem
+COPY /certbot/certs/sportingstats.ca/fullchain1.pem /https/ssl/certs/cert.pem
+COPY /certbot/certs/sportingstats.ca/privkey1.pem /https/ssl/private/key.pem
 
 COPY BackEnd/appsettings.json ./
 COPY BackEnd/appsettings.Development.json ./

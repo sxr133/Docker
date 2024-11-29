@@ -18,7 +18,7 @@ RUN dotnet build -c Release -o out SportingStatsBackEnd.csproj
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
 # Set the environment variable to Development or Production based on your needs
-ARG ASPNETCORE_ENVIRONMENT
+ARG ASPNETCORE_ENVIRONMENT=Development
 ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
 
 # Set the working directory for the runtime image
@@ -26,6 +26,12 @@ WORKDIR /app
 
 # Copy the built application from the build image
 COPY --from=build /app/out ./
+
+# Copy the log4net.config file to the container
+COPY ./log4net.config ./
+
+# Create the Logs directory
+RUN mkdir -p /app/Logs
 
 #Expose the required ports
 EXPOSE 5000 5001

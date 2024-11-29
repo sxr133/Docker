@@ -22,7 +22,7 @@ namespace SportingStatsBackEnd.Controllers.MLB_API
             try
             {
                 Console.WriteLine("inside the NBADivision API");
-                string apiKey = _configuration["AppSettings:ApiKey"];
+                string apiKey = Environment.GetEnvironmentVariable("API_KEY");
                 var client = _clientFactory.CreateClient();
                 var uri = new Uri("https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeams?teamStats=true");
                 Console.WriteLine("Uri {0}", uri);
