@@ -21,7 +21,7 @@ namespace SportingStatsBackEnd.Controllers.NHL_API
         {
             try
             {
-                var apiKey = _configuration["AppSettings:ApiKey"];
+                var apiKey = Environment.GetEnvironmentVariable("API_KEY");
                 var client = _clientFactory.CreateClient();
                 var uri = new Uri("https://tank01-nhl-live-in-game-real-time-statistics-nhl.p.rapidapi.com/getNHLTeams?teamStats=true");
 

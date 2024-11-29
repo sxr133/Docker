@@ -7,11 +7,11 @@ services:
       dockerfile: BackEnd/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db;Database=sportingstats;User=sportinguser;Password=Wabush#002;
     ports:
-      - "5000:5000"
       - "5001:5001"
     volumes:
-      - ./certs:/etc/nginx/ssl
+      - ./certbot/certs/sportingstats.ca:/etc/nginx/ssl/sportingstats.ca
     networks:
       - sportingstats-network
 
@@ -40,7 +40,7 @@ services:
       
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./certs:/etc/nginx/ssl
+      - ./certbot/certs/sportingstats.ca:/etc/nginx/ssl/sportingstats.ca
       - ./FrontEnd/public/images:/usr/share/nginx/html/public/images
       - ./dhparam.pem:/etc/nginx/ssl/dhparam.pem  # Map dhparam.pem file
       
@@ -53,3 +53,6 @@ services:
 networks:
   sportingstats-network:
     driver: bridge
+
+volumes:
+  db_data:

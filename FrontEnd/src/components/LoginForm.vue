@@ -18,7 +18,12 @@
             </div>
             <div  class="flex justify-between">
               <button type="submit" class="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-50 hover:text-gray-700 transition ease-linear duration-500">Login</button>
-              <router-link to="/signup" class="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-50 hover:text-gray-700 transition ease-linear duration-500">Register</router-link>
+              <router-link to="/home"  class="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-50 hover:text-gray-700 transition ease-linear duration-500">Login as Guest</router-link>
+              <router-link to="/signup" class="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-50 hover:text-gray-700 transition ease-linear duration-500"
+                            :class="isDisabled ? 'bg-gray-400 text-gray-300 cursor-not-allowed' : 'hover:bg-gray-50 hover:text-gray-700'"
+                            :style="isDisabled ? 'pointer-events: none;' : ''">
+                Register
+              </router-link>
             </div>
           </form>
         </div>
@@ -41,6 +46,11 @@ library.add(faEye);
 export default {
   components: {
     FontAwesomeIcon
+  },
+  data() {
+    return {
+      isDisabled: true // Set this to `false` to enable the button
+    };
   },
   methods: {
     togglePasswordVisibility() {

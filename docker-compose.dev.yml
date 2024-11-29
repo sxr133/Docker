@@ -6,11 +6,21 @@ services:
     build:
       context: .
       dockerfile: BackEnd/Dockerfile.local
+    env_file:
+      - BackEnd/.env.development
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - DB_SERVER=db  # Use the service name 'db' instead of 127.0.0.1
+      - DB_PORT=1433
+      - DB_USER=sa
+      - DB_PASSWORD=Wabush#002
+      - DB_NAME=sportingstatsdb
     ports:
       - "5000:5000"
-      - "5001:5001"
+    depends_on:
+      - db    
+    volumes:
+      - ./data-protection:/root/.aspnet/DataProtection-Keys      
     networks:
       - sportingstats-network
 
@@ -20,16 +30,27 @@ services:
       context: .
       dockerfile: FrontEnd/Dockerfile.local
       args:
-        - VUE_APP_BACKEND_URL=http://localhost:5000
+        - VUE_APP_BACKEND_URL=http://127.0.0.1:5000
     environment:
       - NODE_ENV=development
-      - VUE_APP_BACKEND_URL=http://localhost:5000
+      - VUE_APP_BACKEND_URL=http://127.0.0.1:5000
     ports:
       - "8080:8080"
       - "3001:3001"
     networks:
       - sportingstats-network
-
+  
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sportingstats-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Wabush#002
+    ports:
+      - "1433:1433"
+    networks:
+      - sportingstats-network
+      
   nginx:
     image: nginx:latest
     ports:
